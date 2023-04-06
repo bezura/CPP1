@@ -14,23 +14,23 @@ private:
 
 public:
 
-    string getData_of_name() {
+    string getByName() {
         return name;
     }
 
-    void getName() {
+    void printName() {
         cout << "Name is : " << name << "\n";
     }
 
-    void getAge() {
+    void printAge() {
         cout << "Age is : " << age << "\n";
     }
 
-    void getWeight() {
+    void printWeight() {
         cout << "Weight is : " << weight << "\n";
     }
 
-    void setName(string _name){
+    void setName(string _name) {
         name = _name;
     }
 
@@ -50,7 +50,7 @@ private:
     vector<person> students;
 
 public:
-    void add_front(string _name, int _age, double _weight) {
+    void add_first(string _name, int _age, double _weight) {
         //cout << "\nAdd at the beginning\nEnter name, age, weight - in that order.\n";
 
         person temp;
@@ -62,9 +62,9 @@ public:
 
     }
 
-    void add_back(string _name, int _age, double _weight) {
+    void add_last(string _name, int _age, double _weight) {
         //cout << "\nAdd at the end\nEnter name, age, weight - in that order.\n";
-        
+
         person temp;
         temp.setName(_name);
         temp.setAge(_age);
@@ -73,10 +73,10 @@ public:
         students.push_back(temp);
 
     }
-    
-    void insert_after_of(string after_name, string _name, int _age, double _weight) {
+
+    void add_after_of(string after_name, string _name, int _age, double _weight) {
         //cout << "\nAdd after of\nEnter the name to which to add\n";
-        int index=-1;
+        int index = -1;
 
         person temp;
         temp.setName(_name);
@@ -84,19 +84,19 @@ public:
         temp.setWeight(_weight);
 
         for (int i = 0; i < students.size(); i++) {
-            if (students[i].getData_of_name() == after_name) {
+            if (students[i].getByName() == after_name) {
                 index = i;
             }
         }
 
-        if (index!=-1) students.insert(students.begin() + index + 1,temp);
-        else cout<<"No such name was found\n";
+        if (index != -1) students.insert(students.begin() + index + 1, temp);
+        else cout << "No such name was found\n";
 
     }
 
-    void insert_before_of(string before_name, string _name, int _age, double _weight) {
+    void add_before_of(string before_name, string _name, int _age, double _weight) {
         //cout << "\nAdd before of\nEnter the name to which to add\n";
-        int index=-1;
+        int index = -1;
 
         person temp;
         temp.setName(_name);
@@ -104,7 +104,7 @@ public:
         temp.setWeight(_weight);
 
         for (int i = 0; i < students.size(); i++) {
-            if (students[i].getData_of_name() == before_name) {
+            if (students[i].getByName() == before_name) {
                 index = i;
             }
         }
@@ -112,18 +112,18 @@ public:
         if (index != -1) students.insert(students.begin() + index, temp);
         else cout << "No such name was found\n";
     }
-    
+
 
     void delete_by_name(string delete_name) {
         vector<int> temp;
         bool Found = false;
         for (int i = 0; i < students.size(); i++) {
-            if (students[i].getData_of_name() == delete_name) {
+            if (students[i].getByName() == delete_name) {
                 temp.push_back(i);
                 Found = true;
             }
         }
-        
+
         if (Found) {
             for (int i = temp.size() - 1; i >= 0; i--) {
                 students.erase(students.begin() + temp[i]);
@@ -131,13 +131,13 @@ public:
         }
         else cout << "No such name was found\n";
     }
-    
-    void display_list() {
+
+    void print_list() {
         for (int i = 0; i < students.size(); i++) {
-            cout << i+1<<"\n";
-            students[i].getName();
-            students[i].getAge();
-            students[i].getWeight();
+            cout << i + 1 << "\n";
+            students[i].printName();
+            students[i].printAge();
+            students[i].printWeight();
             cout << endl;
         }
     }
@@ -147,8 +147,9 @@ public:
 
 int main()
 {
-    people rudn;
-    while (true)
+    people* rudn = new people;
+    bool flag = false;
+    while (!flag)
     {
         cout << "What should I do?\nEnter the action number\n1- Adding an item to the beginning of the list;\n2- Adding an item to the end of the list;\n3- Adding an item to the list after a given item;\n4- Adding an item to the list before a specified item;\n5- Deletes from the list the item with the given name;\n6- Display the contents of the list on the screen;\n7-EXIT\n";
 
@@ -156,15 +157,6 @@ int main()
         cin >> n;
         cout << "\n";
 
-        if (!(n >= 1 and n <= 7)) {
-
-            cout << "\nError in the range, try again\n";
-            cout << "Press any button to continue\n";
-            cin.get();
-
-            main();
-
-        }
 
         switch (n)
         {
@@ -177,7 +169,7 @@ int main()
             cin >> name >> age >> weight;
             cout << "\n";
 
-            rudn.add_front(name, age, weight);
+            rudn->add_first(name, age, weight);
             break;
         }
         case 2: {
@@ -189,7 +181,7 @@ int main()
             cin >> name >> age >> weight;
             cout << "\n";
 
-            rudn.add_back(name, age, weight);
+            rudn->add_last(name, age, weight);
             break;
         }
         case 3: {
@@ -205,7 +197,7 @@ int main()
             cin >> name >> age >> weight;
             cout << "\n";
 
-            rudn.insert_after_of(after_name, name, age, weight);
+            rudn->add_after_of(after_name, name, age, weight);
             break;
         }
         case 4: {
@@ -221,7 +213,7 @@ int main()
             cin >> name >> age >> weight;
             cout << "\n";
 
-            rudn.insert_before_of(before_name, name, age, weight);
+            rudn->add_before_of(before_name, name, age, weight);
             break;
         }
         case 5: {
@@ -230,23 +222,30 @@ int main()
             cin >> delete_name;
             cout << "\n";
 
-            rudn.delete_by_name(delete_name);
+            rudn->delete_by_name(delete_name);
             break;
         }
         case 6: {
             cout << "List{\n";
-            rudn.display_list();
+            rudn->print_list();
             cout << "}\n";
             break;
         }
         case 7: {
-            cout << "Thank";
-            return 0;
+            cout << "!EXIT!";
+            flag = true;
+
+            break;
+        }
+        default: {
+            cout << "\nError in the range, try again\n";
+            cout << "Press any button to continue\n";
+            cin.get();
             break;
         }
         }
     }
-    
-    
-    
+
+    delete rudn;
+    return 0;
 }
